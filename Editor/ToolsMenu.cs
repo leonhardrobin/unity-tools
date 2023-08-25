@@ -4,7 +4,7 @@ using static UnityEngine.Application;
 using static System.IO.Directory;
 using static System.IO.Path;
 
-namespace leonhardrobin
+namespace leonhardrobin.editorTools
 {
     public static class ToolsMenu
     {
