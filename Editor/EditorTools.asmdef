@@ -1,6 +1,6 @@
 {
     "name": "editorTools",
-    "rootNamespace": "",
+    "rootNamespace": "leonhardrobin",
     "references": [],
     "includePlatforms": [
         "Editor"
