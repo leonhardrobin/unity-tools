@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
 
 public static class Tools
 {
@@ -21,7 +22,7 @@ public static class Tools
     public static float RemapRange(float value, float from1, float to1, float from2, float to2) => (value - from1) / (to1 - from1) * (to2 - from2) + from2;
     
     /// <summary>
-    /// Waits for a given time and then releases the element back into the pool.
+    /// Waits for a given time and then releases the element back into the pool
     /// </summary>
     /// <param name="pool">The Unity ObjectPool</param>
     /// <param name="element">The element to release</param>
@@ -32,9 +33,27 @@ public static class Tools
         await Task.Delay(TimeSpan.FromSeconds(time));
         pool.Release(element);
     }
+    
+    /// <summary>
+    /// Checks if an animator has a given parameter
+    /// </summary>
+    /// <param name="animator">The animator to check</param>
+    /// <param name="parameterName">The parameter to check for</param>
+    /// <returns>true or false whether the parameter has been found</returns>
+    public static bool HasParameter(this Animator animator, string parameterName)
+    {
+        return animator.parameters.Any(parameter => parameter.name == parameterName);
+    }
 
     public static class PhysicCalculations
     {
+        /// <summary>
+        /// Calculates the velocity needed to hit a target with a given angle in 3D space
+        /// </summary>
+        /// <param name="alpha">The desired angle towards the target</param>
+        /// <param name="startPos">The starting position</param>
+        /// <param name="destPos">The destination position</param>
+        /// <returns>The velocity as a Vector3</returns>
         public static Vector3 VelocityTowardsTargetWithAngle(float alpha, Vector3 startPos, Vector3 destPos)
         {
             // calculate Force to apply
@@ -65,6 +84,14 @@ public static class Tools
     
     public static class DetectHitDirection
     {
+        /// <summary>
+        /// Calculates the horizontal and vertical hit direction based on the hit point and the transform's position
+        /// </summary>
+        /// <param name="t">transform where the hit came from</param>
+        /// <param name="hitPoint">hit position of the target</param>
+        /// <param name="horizontal">horizontal amount of hit direction</param>
+        /// <param name="vertical">vertical amount of hit direction</param>
+        /// <param name="intensity">intensity multiplier</param>
         public static void HitDirection(Transform t, Vector3 hitPoint, out float horizontal, out float vertical, float intensity = 3f)
         {
             Vector3 playerPosition = t.position;
