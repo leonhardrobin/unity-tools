@@ -24,6 +24,8 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     }
 
     protected bool useDontDestroyOnLoad = false;
+    
+    public static bool IsInitialized => _instance != null;
 
     protected virtual void Awake()
     {
