@@ -13,7 +13,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         get
         {
             if (_instance != null) return _instance;
-            _instance = (T)FindObjectOfType(typeof(T));
+            _instance = FindFirstObjectByType<T>();
             if (_instance == null)
             {
                 Debug.LogError("An instance of " + typeof(T) +
