@@ -1,42 +1,46 @@
 using UnityEngine;
 
-
-/// <summary>
-/// A singleton class that can be inherited from to create a singleton.
-/// </summary>
-/// <typeparam name="T">The class that inherits from this singleton</typeparam>
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+namespace LRS
 {
-    private static T _instance;
-    public static T Instance
+    /// <summary>
+    /// A singleton class that can be inherited from to create a singleton.
+    /// </summary>
+    /// <typeparam name="T">The class that inherits from this singleton</typeparam>
+    public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
-        get
+        private static T _instance;
+
+        public static T Instance
         {
-            if (_instance != null) return _instance;
-            _instance = FindFirstObjectByType<T>();
-            if (_instance == null)
+            get
             {
-                Debug.LogError("An instance of " + typeof(T) +
-                               " is needed in the scene, but there is none.");
+                if (_instance != null) return _instance;
+                _instance = FindFirstObjectByType<T>();
+                if (_instance == null)
+                {
+                    Debug.LogError("An instance of " + typeof(T) +
+                                   " is needed in the scene, but there is none.");
+                }
+
+                return _instance;
             }
-            return _instance;
         }
-    }
 
-    protected bool useDontDestroyOnLoad = false;
-    
-    public static bool IsInitialized => _instance != null;
+        protected bool useDontDestroyOnLoad = false;
 
-    protected virtual void Awake()
-    {
-        if (this != Instance)
+        public static bool IsInitialized => _instance != null;
+
+        protected virtual void Awake()
         {
-            Destroy(gameObject);
-        }
-        else
-        {
-            _instance = this as T;
-            if (useDontDestroyOnLoad) DontDestroyOnLoad(gameObject);
+            if (this != Instance)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                _instance = this as T;
+                if (useDontDestroyOnLoad) DontDestroyOnLoad(gameObject);
+            }
         }
     }
 }
