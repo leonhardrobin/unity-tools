@@ -6,7 +6,7 @@ using System.Linq;
 
 public static class Tools
 {
-    private static Matrix4x4 _isoMatrix = Matrix4x4.Rotate(Quaternion.Euler(3.234f, 45, 0));
+    private static Matrix4x4 _isoMatrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
     public static Vector3 ToIso(this Vector3 input) => _isoMatrix.MultiplyPoint3x4(input);
     public static float RangeTo01(float value, float min, float max) => (value - min) / (max - min);
     
