@@ -1,5 +1,7 @@
 {
     "name": "com.lrs.tools",
     "version": "0.0.4-preview-1",
-    "displayName": "LRS' Tools"
+    "displayName": "LRS' Tools",
+    "description": "Various tools for Unity development",
+    "author": "Leonhard Robin Schnaitl"
 }
