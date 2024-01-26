@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UnityUtils {
+namespace LRS.Singleton {
     public class Singleton<T> : MonoBehaviour where T : Component {
         protected static T instance;
 
