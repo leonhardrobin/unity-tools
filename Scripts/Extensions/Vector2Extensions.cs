@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnityUtils {
+namespace LRS.Utils {
     public static class Vector2Extensions {
         /// <summary>
         /// Adds to any x y values of a Vector2

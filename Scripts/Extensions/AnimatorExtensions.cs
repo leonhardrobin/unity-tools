@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace LRS
+namespace LRS.Utils
 {
     public static class AnimatorExtensions
     {

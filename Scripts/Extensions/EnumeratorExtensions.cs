@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace UnityUtils {
+namespace LRS.Utils {
     public static class EnumeratorExtensions {
         /// <summary>
         /// Converts an IEnumerator<T> to an IEnumerable<T>.

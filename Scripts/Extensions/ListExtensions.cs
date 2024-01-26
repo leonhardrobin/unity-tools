@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace UnityUtils {
+namespace LRS.Utils {
     public static class ListExtensions {
         /// <summary>
         /// Determines whether a collection is null or has no elements

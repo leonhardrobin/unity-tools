@@ -4,7 +4,7 @@ using static UnityEngine.Application;
 using static System.IO.Directory;
 using static System.IO.Path;
 
-namespace LRS.editorTools
+namespace LRS.Editor
 {
     public static class ToolsMenu
     {

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Threading.Tasks;
 
-namespace UnityUtils {
+namespace LRS.Utils {
     public static class IEnumeratorExtensions {
         /// <summary>
         /// Converts the Task into an IEnumerator for Unity coroutine usage.
