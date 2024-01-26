@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 
 namespace UnityUtils {
-    public class PersistentSingleton<T> : MonoBehaviour where T : Component {
-        public bool AutoUnparentOnAwake = true;
-
+    /// <summary>
+    /// Persistent Regulator singleton, will destroy any other older components of the same type it finds on awake
+    /// </summary>
+    public class RegulatorSingleton<T> : MonoBehaviour where T : Component {
         protected static T instance;
 
         public static bool HasInstance => instance != null;
-        public static T TryGetInstance() => HasInstance ? instance : null;
+
+        public float InitializationTime { get; private set; }
 
         public static T Instance {
             get {
@@ -15,6 +17,7 @@ namespace UnityUtils {
                     instance = FindAnyObjectByType<T>();
                     if (instance == null) {
                         var go = new GameObject(typeof(T).Name + " Auto-Generated");
+                        go.hideFlags = HideFlags.HideAndDontSave;
                         instance = go.AddComponent<T>();
                     }
                 }
@@ -32,18 +35,18 @@ namespace UnityUtils {
 
         protected virtual void InitializeSingleton() {
             if (!Application.isPlaying) return;
+            InitializationTime = Time.time;
+            DontDestroyOnLoad(gameObject);
 
-            if (AutoUnparentOnAwake) {
-                transform.SetParent(null);
+            T[] oldInstances = FindObjectsByType<T>(FindObjectsSortMode.None);
+            foreach (T old in oldInstances) {
+                if (old.GetComponent<RegulatorSingleton<T>>().InitializationTime < InitializationTime) {
+                    Destroy(old.gameObject);
+                }
             }
 
             if (instance == null) {
                 instance = this as T;
-                DontDestroyOnLoad(gameObject);
-            } else {
-                if (instance != this) {
-                    Destroy(gameObject);
-                }
             }
         }
     }

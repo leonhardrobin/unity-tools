@@ -1,14 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace LRS.Singleton
-{
-    /// <summary>
-    /// A singleton class that can be inherited from to create a singleton.
-    /// </summary>
-    /// <typeparam name="T">The class that inherits from this singleton</typeparam>
+namespace UnityUtils {
     public class Singleton<T> : MonoBehaviour where T : Component {
         protected static T instance;
-    
+
         public static bool HasInstance => instance != null;
         public static T TryGetInstance() => HasInstance ? instance : null;
 
@@ -17,11 +12,11 @@ namespace LRS.Singleton
                 if (instance == null) {
                     instance = FindAnyObjectByType<T>();
                     if (instance == null) {
-                        GameObject go = new (typeof(T).Name + " Auto-Generated");
+                        var go = new GameObject(typeof(T).Name + " Auto-Generated");
                         instance = go.AddComponent<T>();
                     }
                 }
-            
+
                 return instance;
             }
         }
@@ -35,12 +30,8 @@ namespace LRS.Singleton
 
         protected virtual void InitializeSingleton() {
             if (!Application.isPlaying) return;
-        
-            if (this != instance) {
-                Destroy(gameObject);
-            } else {
-                instance = this as T;
-            }
+
+            instance = this as T;
         }
     }
 }

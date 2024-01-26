@@ -2,11 +2,10 @@ using UnityEngine;
 using UnityEngine.Pool;
 using System.Threading.Tasks;
 using System;
-using System.Linq;
 
 namespace LRS
 {
-    public static class Tools
+    public static class Helpers
     {
         private static Matrix4x4 _isoMatrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
         public static Vector3 ToIso(this Vector3 input) => _isoMatrix.MultiplyPoint3x4(input);
@@ -36,18 +35,7 @@ namespace LRS
             await Task.Delay(TimeSpan.FromSeconds(time));
             pool.Release(element);
         }
-
-        /// <summary>
-        /// Checks if an animator has a given parameter
-        /// </summary>
-        /// <param name="animator">The animator to check</param>
-        /// <param name="parameterName">The parameter to check for</param>
-        /// <returns>true or false whether the parameter has been found</returns>
-        public static bool HasParameter(this Animator animator, string parameterName)
-        {
-            return animator.parameters.Any(parameter => parameter.name == parameterName);
-        }
-
+        
         public static class PhysicCalculations
         {
             /// <summary>
