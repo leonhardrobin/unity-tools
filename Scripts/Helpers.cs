@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 
 namespace LRS
 {
@@ -34,6 +35,27 @@ namespace LRS
         {
             await Task.Delay(TimeSpan.FromSeconds(time));
             pool.Release(element);
+        }
+
+        private static readonly Dictionary<float, WaitForSeconds> WaitForSecondsDict = new(100, new FloatComparer());
+        
+        /// <summary>
+        /// Returns a WaitForSeconds object for the specified duration. </summary>
+        /// <param name="seconds">The duration in seconds to wait.</param>
+        /// <returns>A WaitForSeconds object.</returns>
+        public static WaitForSeconds GetWaitForSeconds(float seconds) {
+            if (seconds < 1f / Application.targetFrameRate) return null;
+
+            if (WaitForSecondsDict.TryGetValue(seconds, out WaitForSeconds forSeconds)) return forSeconds;
+
+            WaitForSeconds waitForSeconds = new (seconds);
+            WaitForSecondsDict[seconds] = waitForSeconds;
+            return waitForSeconds;
+        }
+
+        private class FloatComparer : IEqualityComparer<float> {
+            public bool Equals(float x, float y) => Mathf.Abs(x - y) <= Mathf.Epsilon;
+            public int GetHashCode(float obj) => obj.GetHashCode();
         }
         
         public static class PhysicCalculations
